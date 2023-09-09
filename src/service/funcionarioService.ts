@@ -1,4 +1,6 @@
 import Funcionario, { IFuncionario } from "../model/funcionarioModel";
+import bcrypt from "bcrypt";
+
 
 export class FuncionarioService {
 
@@ -13,10 +15,11 @@ export class FuncionarioService {
 
     static async criarFuncionarioService(objectDTO: IFuncionario): Promise<IFuncionario | null | undefined> {
         try {
+            const senhaCriptografada = await bcrypt.hash(objectDTO.senha, 10);
             const criarFuncionario: IFuncionario = new Funcionario({
                 nome: objectDTO.nome,
                 email: objectDTO.email,
-                senha: objectDTO.senha,
+                senha: senhaCriptografada,
                 dataNascimento: objectDTO.dataNascimento,
                 dataAdmisao: objectDTO.dataAdmisao,
                 dataDemisao: objectDTO.dataDemisao,
@@ -25,7 +28,8 @@ export class FuncionarioService {
                 bairro: objectDTO.bairro,
                 cep: objectDTO.cep,
                 foto: objectDTO.foto,
-                ativo: objectDTO.ativo
+                ativo: objectDTO.ativo,
+                salario: objectDTO.salario
             });
             const salvarFuncionario = await criarFuncionario.save();
             return salvarFuncionario;
@@ -45,6 +49,10 @@ export class FuncionarioService {
 
     static async alterarFuncionarioService(id: string, objectDTO: IFuncionario): Promise<IFuncionario | null | undefined> {
         try {
+            if (objectDTO.senha){
+                const novaSenha = await bcrypt.hash(objectDTO.senha, 10);
+                objectDTO.senha = novaSenha;
+            }
             const alteracaoFuncionario = await Funcionario.findOneAndUpdate({ _id: id }, objectDTO);
             if (alteracaoFuncionario) {
                 const alterarFuncionario = await Funcionario.findById(id);
