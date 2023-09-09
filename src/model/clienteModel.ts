@@ -50,7 +50,7 @@ const clienteSchema = new mongoose.Schema<ICliente>(
 );
 
 // Define o modelo (Model) do cliente usando o Mongoose
-const Cliente: Model<ICliente> = mongoose.model<ICliente>("clente", clienteSchema);
+const Cliente: Model<ICliente> = mongoose.model<ICliente>("tb_cliente", clienteSchema);
 
 // Exporta o modelo do cliente para ser usado em outras partes do código
 export default Cliente;
