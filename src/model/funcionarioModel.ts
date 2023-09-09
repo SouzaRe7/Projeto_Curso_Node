@@ -7,7 +7,7 @@ export interface IFuncionario extends Document {
     email: string;
     senha: string;
     dataNascimento: Date;
-    dataAdmisao: Date;
+    dataAdmisao?: Date;
     dataDemisao?: Date;
     obsDemisao?: string;
     rua: string;
@@ -15,6 +15,7 @@ export interface IFuncionario extends Document {
     cep: string;
     foto?: string;
     ativo?: boolean;
+    salario: number;
 }
 
 const funcionarioSchema = new mongoose.Schema<IFuncionario>(
@@ -23,14 +24,15 @@ const funcionarioSchema = new mongoose.Schema<IFuncionario>(
         email: { type: String, required: true },
         senha: { type: String, required: true },
         dataNascimento: { type: Date, required: true },
-        dataAdmisao: { type: Date, required: true },
+        dataAdmisao: { type: Date, required: false, default: Date.now },
         dataDemisao: { type: Date, required: false },
         obsDemisao: { type: String, required: false },
         rua: { type: String, required: true },
         bairro: { type: String, required: true },
         cep: { type: String, required: true },
         foto: { type: String, required: false },
-        ativo: { type: String, default: true }
+        ativo: { type: String, default: true },
+        salario: { type: Number, required: true }
     },
     {
         versionKey: false
