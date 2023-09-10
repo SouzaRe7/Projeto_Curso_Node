@@ -12,7 +12,7 @@ export interface IServico extends Document {
     ativo?: boolean;
     funcionario: typeof Funcionario | string;
     cliente: typeof Cliente | string;
-    status: number; // 0-> aguardando 1->em andamento 2->finalizado/cancelado
+    status: number; // 0-> aguardando 1->em andamento 2->cancelado 3->finalizado
 }
 
 const servicoSchema = new mongoose.Schema<IServico>(
