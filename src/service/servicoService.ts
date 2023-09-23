@@ -3,6 +3,7 @@ import Funcionario from "../model/funcionarioModel";
 import Cliente from "../model/clienteModel";
 
 export class ServicoService {
+
     static async criarServicoService(objectDTO: IServico): Promise<IServico | null | undefined> {
         try {
             const idFuncionario = await Funcionario.findById(objectDTO.funcionario);
@@ -26,7 +27,7 @@ export class ServicoService {
 
     static async selecionarTodosServicoService(): Promise<Array<IServico> | undefined> {
         try {
-            const retSelecionarTodosServico: Array<IServico> = await Servico.find({});
+            const retSelecionarTodosServico: Array<IServico> = await Servico.find({}).populate([{path: "funcionario"}, {path: "cliente"}]);
             return retSelecionarTodosServico;
         } catch (err) {
             console.log(err);
@@ -35,7 +36,7 @@ export class ServicoService {
 
     static async detalharServicoService(id: string): Promise<IServico | null | undefined> {
         try {
-            const idDetalharServico: IServico | null | undefined = await Servico.findById(id);
+            const idDetalharServico: IServico | null | undefined = await Servico.findById(id).populate([{path: "funcionario"}, {path: "cliente"}]);
             return idDetalharServico;
         } catch (err) {
             console.log(err);
