@@ -2,6 +2,7 @@ import { IServico } from "../model/servicoModel";
 import { ServicoService } from "../service/servicoService";
 
 export class ServicoController {
+    
     static async selecionarTodosServicoController(): Promise<Array<IServico> | undefined> {
         const retSelecionarTodosServico = await ServicoService.selecionarTodosServicoService();
         return retSelecionarTodosServico;

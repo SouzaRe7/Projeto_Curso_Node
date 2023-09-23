@@ -4,12 +4,13 @@ import express, { Request, Response } from "express";
 // Importa o controlador do cliente ('ClienteController') e a interface 'ICliente' do modelo ('cliente')
 import { ClienteController } from "../controller/clienteController";
 import { ICliente } from "../model/clienteModel";
+import { authToken } from "../middlewares/authentication";
 
 // Cria um roteador do Express
 const ClienteRouter = express.Router();
 
 // Define uma rota GET para buscar todos os clientes
-ClienteRouter.get("/cliente", async (req: Request, res: Response) => {
+ClienteRouter.get("/cliente", authToken, async (req: Request, res: Response) => {
     // Chama o método 'selecionarTodosClienteController' do controlador de cliente
     const retSelecionarTodosCliente = await ClienteController.selecionarTodosClienteController();
     // Verifica se a resposta do controlador existe
@@ -23,7 +24,7 @@ ClienteRouter.get("/cliente", async (req: Request, res: Response) => {
 });
 
 // Define uma rota GET para buscar um cliente por ID
-ClienteRouter.get("/cliente/:id", async (req: Request, res: Response) => {
+ClienteRouter.get("/cliente/:id", authToken, async (req: Request, res: Response) => {
     // Obtém o ID do cliente a partir dos parâmetros da URL
     const idFromUser: string = req.params.id;
     // Chama o método 'detalharClienteController' do controlador de cliente com o ID
@@ -39,7 +40,7 @@ ClienteRouter.get("/cliente/:id", async (req: Request, res: Response) => {
 });
 
 // Define uma rota POST para criar um novo cliente
-ClienteRouter.post("/cliente", async (req: Request, res: Response) => {
+ClienteRouter.post("/cliente", authToken, async (req: Request, res: Response) => {
     // Obtém os dados do cliente a partir do corpo da requisição
     const fromCliente: ICliente = req.body;
     // Chama o método 'criarClienteController' do controlador de cliente com os dados do cliente
@@ -55,7 +56,7 @@ ClienteRouter.post("/cliente", async (req: Request, res: Response) => {
 });
 
 // Define uma rota PUT para atualizar um cliente por ID
-ClienteRouter.put("/cliente/:id", async (req: Request, res: Response) => {
+ClienteRouter.put("/cliente/:id", authToken, async (req: Request, res: Response) => {
     // Obtém o ID do cliente a partir dos parâmetros da URL
     const idFromUser: string = req.params.id;
     // Obtém os dados do cliente a partir do corpo da requisição
@@ -73,7 +74,7 @@ ClienteRouter.put("/cliente/:id", async (req: Request, res: Response) => {
 });
 
 // Define uma rota DELETE para excluir um cliente por ID
-ClienteRouter.delete("/cliente/:id", async (req: Request, res: Response) => {
+ClienteRouter.delete("/cliente/:id", authToken, async (req: Request, res: Response) => {
     // Obtém o ID do cliente a partir dos parâmetros da URL
     const idFromUser: string = req.params.id;
     // Chama o método 'excluirClienteController' do controlador de cliente com o ID

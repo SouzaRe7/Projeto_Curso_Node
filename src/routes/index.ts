@@ -8,6 +8,7 @@ import { Express, Request, Response } from "express";
 import ClienteRouter from "./clienteRoutes";
 import FuncionarioRouter from "./funcionarioRoutes";
 import ServicoRouter from "./servicoRoutes";
+import LoginRouter from "./loginRoutes";
 
 // Define as rotas da aplicação, recebendo uma instância do Express como parâmetro
 export const routes = (app: Express) => {
@@ -19,5 +20,5 @@ export const routes = (app: Express) => {
 
     // Utiliza o middleware 'express.json()' para fazer o parsing do corpo das requisições em JSON
     // e associa o roteador 'ClienteRouter' à aplicação
-    app.use(express.json(), ClienteRouter, FuncionarioRouter, ServicoRouter);
+    app.use(express.json(), ClienteRouter, FuncionarioRouter, ServicoRouter, LoginRouter);
 }
