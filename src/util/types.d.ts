@@ -3,3 +3,11 @@ export type LoginSchema = {
     senha?: string;
     token?: string;
 };
+
+declare global{
+    namespace Express{
+        interface Request{
+            idUser: Context;
+        }
+    }
+}

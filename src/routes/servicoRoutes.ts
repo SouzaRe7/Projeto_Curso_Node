@@ -1,10 +1,11 @@
 import express, { Request, Response } from "express";
 import { ServicoController } from "../controller/servicoController";
 import { IServico } from "../model/servicoModel";
+import { authToken } from "../middlewares/authentication";
 
 const ServicoRouter = express.Router();
 
-ServicoRouter.get("/servico", async (req: Request, res: Response) => {
+ServicoRouter.get("/servico", authToken, async (req: Request, res: Response) => {
     const retSelecionarTodosServico = await ServicoController.selecionarTodosServicoController();
     if (retSelecionarTodosServico) {
         res.status(200).send(retSelecionarTodosServico);
@@ -13,7 +14,7 @@ ServicoRouter.get("/servico", async (req: Request, res: Response) => {
     }
 });
 
-ServicoRouter.get("/servico/:id", async (req: Request, res: Response) => {
+ServicoRouter.get("/servico/:id", authToken, async (req: Request, res: Response) => {
     const idFromUser: string = req.params.id;
     const retDetalharServico = await ServicoController.detalharServicoController(idFromUser);
     if (retDetalharServico) {
@@ -23,7 +24,7 @@ ServicoRouter.get("/servico/:id", async (req: Request, res: Response) => {
     }
 });
 
-ServicoRouter.post("/servico", async (req: Request, res: Response) => {
+ServicoRouter.post("/servico", authToken, async (req: Request, res: Response) => {
     const fromServico: IServico = req.body;
     const retCriarServico = await ServicoController.criarServicoController(fromServico);
     if (retCriarServico) {
@@ -33,7 +34,7 @@ ServicoRouter.post("/servico", async (req: Request, res: Response) => {
     }
 });
 
-ServicoRouter.put("/servico/:id", async (req: Request, res: Response) => {
+ServicoRouter.put("/servico/:id", authToken, async (req: Request, res: Response) => {
     const idFromUser: string = req.params.id;
     const fromServico: IServico = req.body;
     const retAlterarServico = await ServicoController.alterarServicoController(idFromUser, fromServico);
@@ -44,7 +45,7 @@ ServicoRouter.put("/servico/:id", async (req: Request, res: Response) => {
     }
 });
 
-ServicoRouter.delete("/servico/:id", async (req: Request, res: Response) => {
+ServicoRouter.delete("/servico/:id", authToken, async (req: Request, res: Response) => {
     const idFromUser: string = req.params.id;
     const retExcluirServico = await ServicoController.excluirServicoController(idFromUser);
     if (retExcluirServico) {

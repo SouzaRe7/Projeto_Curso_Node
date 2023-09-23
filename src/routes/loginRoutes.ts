@@ -9,9 +9,8 @@ LoginRouter.get("/login", async (req: Request, res: Response) => {
 
     const loginDTO: LoginSchema = req.body;
     const validarLogin = await LoginController.validarLoginController(loginDTO);
-    // Verifica se a resposta do controlador existe
     if (validarLogin) {
-        res.status(200).send(validarLogin);
+        res.status(201).send(validarLogin);
     } else {
         res.sendStatus(404);
     }
