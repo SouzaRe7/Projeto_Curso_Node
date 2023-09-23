@@ -7,6 +7,7 @@ export const generateToken = (id: string): string | undefined => {
     };
     if (dataToAssign.id && jwtSecretKey) {
         const token = Jwt.sign(dataToAssign, jwtSecretKey);
+        
         return token;
     } else {
         return undefined;

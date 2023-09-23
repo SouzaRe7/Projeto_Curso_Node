@@ -6,6 +6,8 @@ import { routes } from "./routes";
 // Importa a conexão com o banco de dados do arquivo "db.ts"
 import db from "./repository/db";
 
+import cors from "cors";
+
 // Estabelece um listener de eventos para tratamento de erros na conexão com o banco
 db.on("error", () => console.log("Erro ao restabelecer conexao"));
 
@@ -16,6 +18,8 @@ db.once("open", () => {
 
 // Cria uma instância do Express
 const app = express();
+
+app.use(cors());
 
 // Configura as rotas da aplicação
 routes(app);
