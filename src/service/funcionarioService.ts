@@ -15,10 +15,14 @@ export class FuncionarioService {
 
     static async criarFuncionarioService(objectDTO: IFuncionario): Promise<IFuncionario | null | undefined> {
         try {
+            const validarEmail = await Funcionario.findOne({ email: objectDTO.email });
+            if (validarEmail) {
+                return undefined;
+            }
             const senhaCriptografada = await bcrypt.hash(objectDTO.senha, 10);
             const criarFuncionario: IFuncionario = new Funcionario({
                 nome: objectDTO.nome,
-                email: objectDTO.email,
+                email: validarEmail,
                 senha: senhaCriptografada,
                 dataNascimento: objectDTO.dataNascimento,
                 dataAdmisao: objectDTO.dataAdmisao,
@@ -29,7 +33,8 @@ export class FuncionarioService {
                 cep: objectDTO.cep,
                 foto: objectDTO.foto,
                 ativo: objectDTO.ativo,
-                salario: objectDTO.salario
+                salario: objectDTO.salario,
+                admin: objectDTO.admin,
             });
             const salvarFuncionario = await criarFuncionario.save();
             return salvarFuncionario;
@@ -49,7 +54,13 @@ export class FuncionarioService {
 
     static async alterarFuncionarioService(id: string, objectDTO: IFuncionario): Promise<IFuncionario | null | undefined> {
         try {
-            if (objectDTO.senha){
+            if (objectDTO.email) {
+                const validarEmail = await Funcionario.findOne({ email: objectDTO.email });
+                if (validarEmail?._id != id) {
+                    return undefined;
+                }
+            }
+            if (objectDTO.senha) {
                 const novaSenha = await bcrypt.hash(objectDTO.senha, 10);
                 objectDTO.senha = novaSenha;
             }
