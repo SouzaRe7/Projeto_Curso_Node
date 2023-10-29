@@ -46,6 +46,9 @@ export class FuncionarioService {
     static async detalharFuncionarioService(id: string): Promise<IFuncionario | null | undefined> {
         try {
             const idDetalharFuncionario: IFuncionario | null | undefined = await Funcionario.findById(id);
+            if (idDetalharFuncionario && idDetalharFuncionario.senha){
+                idDetalharFuncionario.senha = "";
+            }
             return idDetalharFuncionario;
         } catch (err) {
             console.log(err);
