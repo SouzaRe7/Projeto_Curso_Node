@@ -7,6 +7,9 @@ export class ServicoService {
     static async criarServicoService(objectDTO: IServico): Promise<IServico | null | undefined> {
         try {
             const idFuncionario = await Funcionario.findById(objectDTO.funcionario);
+            if (idFuncionario && idFuncionario.senha){
+                idFuncionario.senha = "";
+            }
             const idCliente = await Cliente.findById(objectDTO.cliente);
             const criarServico: IServico = new Servico({
                 nome: objectDTO.nome,
